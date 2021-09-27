@@ -1,7 +1,5 @@
 <?php
 use GameOfLife\Board;
-use Ulrichsg\Getopt;
-require_once "Getopt.php";
 
 /**
  * @param $className
@@ -15,29 +13,12 @@ function autoload ($className)
 }
 spl_autoload_register("autoload");
 
-$options = new Getopt(array(
-    array(null, 'startRandom', Getopt::NO_ARGUMENT,"Starts the game with a random field"),
-    array(null, 'startGlider', Getopt::NO_ARGUMENT,"Starts the game with a Glider field"),
-    array('w', 'width', Getopt::NO_ARGUMENT, "width of the Board"),
-    array('h', 'height', Getopt::NO_ARGUMENT, "height of the Board"),
-    array('s', 'maxSteps', Getopt::NO_ARGUMENT, "Show the max Generation"),
-    array('v', 'version', Getopt::NO_ARGUMENT, "Show the Version"),
-    array('h', 'help', Getopt::NO_ARGUMENT, "Show the Help Menü")
-));
-$options->parse();
-
-if ($options->getOption("version"))
-{
-   echo "Version: 1\n";
-   die;
-
-}
-
-if ($options->getOption("help"))
-{
-    $options->showHelp();
-    die;
-}
+/**
+ * @var
+ *
+ * Specifies how many generation should appear
+ */
+$generationen = 40;
 
 /**
  * @Class
@@ -46,62 +27,21 @@ if ($options->getOption("help"))
  */
 $life = new Board(10, 10);
 
-if ($options->getOption("startRandom"))
-{
-    $life->generateRandomBoard();
-}
-
-if ($options->getOption("startGlider"))
-{
-    $life->generateGleiter();
-}
-
-if ($options->getOption("width"))
-{
-    echo $life->width;
-}
-
-if ($options->getOption("height"))
-{
-    echo $life->height;
-}
-
-/**
- * @var
- *
- * Specifies how many generation should appear
- */
-$maxSteps = 100;
-if ($options->getOption("maxSteps"))
-{
-    echo $maxSteps;
-}
-
 /**
  * Possible boards
  */
 //$life->generateRandomBoard();
-//$life->generateGleiter();
-$life->generateBlinker();
+$life->generateGleiter();
+//$life->generateblinker();
 
 /**
  * for loop which outputs the generations until the above wave is reached
  */
-for ($i=0; $i<$maxSteps; $i++)
+for ($i=0; $i<$generationen; $i++)
 {
     echo "Generation: $i \n";
     $life->printBoard();
     $life->calculateNextGeneration();
-    if ($life->shouldFinish())
-    {
-        break;
-    }
-
-    //if(//Keine weiterentwicklung || nur Blink-Muster)
-    //{
-       // break;
-    //Vergleichen
-    //}
 }
 
 

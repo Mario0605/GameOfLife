@@ -17,20 +17,14 @@ class Board
      *
      * Indicates the width of the board at the end
      */
-    public $width;
+    private $width;
 
     /**
      * @var
      *
      * Indicates the height of the board at the end
      */
-    public $height;
-    /**
-     * Contains all previous boards in an array
-     * @var array
-     */
-    private $previousGenerations;
-
+    private $height;
 
     /**
      * @param $_width
@@ -86,7 +80,7 @@ class Board
      *
      * Generates a Turn signal in the board
      */
-    public function generateBlinker()
+    public function generateblinker()
     {
         for ($y = 0; $y < $this->height; ++$y) {
             $row = [];
@@ -162,8 +156,6 @@ class Board
                 $newBoard[$widthId][$heightId] = $newValue;
             }
         }
-        // Sezt an letzer stelle ein neues array
-        $this->previousGenerations[] = $this->board;
         $this->board = $newBoard;
 
     }
@@ -183,29 +175,5 @@ class Board
             }
             echo "\n";
         }
-    }
-
-    /**
-     * @meth
-     *
-     *Checks if the generations repeat
-     */
-    function shouldFinish()
-    {
-        $previousBoard = $this->previousGenerations[count($this->previousGenerations) -1];
-        $currentBoard = $this->board;
-        if ($previousBoard == $currentBoard)
-        {
-            //Wie liefern functionen antworten
-            return true;
-        }elseif (count($this->previousGenerations) > 1)
-        {
-            $previousPreviousBoard = $this->previousGenerations[count($this->previousGenerations) -2];
-            If($previousPreviousBoard ==  $currentBoard)
-                {
-                    return true;
-                }
-        }
-        return false;
     }
 }
