@@ -8,23 +8,21 @@ class Board
      *
      * Double nested array, Represents the board (game board)
      */
-    public $board = array(
-        array(0, 1, 2, 3, 4),
-        0, 1, 2, 3, 4);
+    private $board = [[]];
 
     /**
      * @var
      *
      * Indicates the width of the board at the end
      */
-    public $width;
+    private $width;
 
     /**
      * @var
      *
      * Indicates the height of the board at the end
      */
-    public $height;
+    private $height;
     /**
      * Contains all previous boards in an array
      * @var array
@@ -178,7 +176,7 @@ class Board
         for ($y = 0; $y < $this->height; ++$y) {
             for ($x = 0; $x < $this->width; ++$x) {
                 $character = "-";
-                if ($this->board[$x][$y] == 1) $character = "*";
+                if ($this->board[$y][$x] == 1) $character = "*";
                 echo " $character ";
             }
             echo "\n";
@@ -186,9 +184,9 @@ class Board
     }
 
     /**
-     * @meth
+     * Checks if the generations repeat.
      *
-     *Checks if the generations repeat
+     * @meth shouldFinish
      */
     function shouldFinish()
     {
@@ -198,10 +196,11 @@ class Board
         {
             //Wie liefern functionen antworten
             return true;
-        }elseif (count($this->previousGenerations) > 1)
+        }
+            elseif (count($this->previousGenerations) > 1)
         {
             $previousPreviousBoard = $this->previousGenerations[count($this->previousGenerations) -2];
-            If($previousPreviousBoard ==  $currentBoard)
+            if ($previousPreviousBoard ==  $currentBoard)
                 {
                     return true;
                 }

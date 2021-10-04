@@ -16,19 +16,19 @@ function autoload ($className)
 spl_autoload_register("autoload");
 
 $options = new Getopt(array(
-    array(null, 'startRandom', Getopt::NO_ARGUMENT,"Starts the game with a random field"),
-    array(null, 'startGlider', Getopt::NO_ARGUMENT,"Starts the game with a Glider field"),
-    array('w', 'width', Getopt::NO_ARGUMENT, "width of the Board"),
-    array('h', 'height', Getopt::NO_ARGUMENT, "height of the Board"),
+    array('r', 'startRandom', Getopt::NO_ARGUMENT,"Starts the game with a random field"),
+    array('g', 'startGlider', Getopt::NO_ARGUMENT,"Starts the game with a Glider field"),
+    array('w', 'width', Getopt::REQUIRED_ARGUMENT, "Allows to set the width of the Board"),
+    array('h', 'height', Getopt::REQUIRED_ARGUMENT, "Allows to set the height of the Board"),
     array('s', 'maxSteps', Getopt::NO_ARGUMENT, "Show the max Generation"),
     array('v', 'version', Getopt::NO_ARGUMENT, "Show the Version"),
-    array('h', 'help', Getopt::NO_ARGUMENT, "Show the Help Menü")
+    array('h', 'help', Getopt::NO_ARGUMENT, "Set the Help menu")
 ));
 $options->parse();
 
 if ($options->getOption("version"))
 {
-   echo "Version: 1\n";
+   echo "Version: 1.0\n";
    die;
 
 }
@@ -39,12 +39,25 @@ if ($options->getOption("help"))
     die;
 }
 
+$width = 10;
+$height = 10;
+
+if ($options->getOption("width"))
+{
+    $width = $options->getOption("width");
+}
+if ($options->getOption("height"))
+{
+    $height = $options->getOption("height");
+}
+
 /**
  * @Class
  *
  * The Class Board creates a board with the specified width and height.
  */
-$life = new Board(10, 10);
+
+$life = new Board($width, $height);
 
 if ($options->getOption("startRandom"))
 {
@@ -54,16 +67,6 @@ if ($options->getOption("startRandom"))
 if ($options->getOption("startGlider"))
 {
     $life->generateGleiter();
-}
-
-if ($options->getOption("width"))
-{
-    echo $life->width;
-}
-
-if ($options->getOption("height"))
-{
-    echo $life->height;
 }
 
 /**
@@ -96,12 +99,6 @@ for ($i=0; $i<$maxSteps; $i++)
     {
         break;
     }
-
-    //if(//Keine weiterentwicklung || nur Blink-Muster)
-    //{
-       // break;
-    //Vergleichen
-    //}
 }
 
 
