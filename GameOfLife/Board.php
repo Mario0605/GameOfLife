@@ -23,12 +23,12 @@ class Board
      * Indicates the height of the board at the end
      */
     private $height;
+
     /**
      * Contains all previous boards in an array
      * @var array
      */
     private $previousGenerations;
-
 
     /**
      * @param $_width
@@ -163,7 +163,6 @@ class Board
         // Sezt an letzer stelle ein neues array
         $this->previousGenerations[] = $this->board;
         $this->board = $newBoard;
-
     }
 
     /**

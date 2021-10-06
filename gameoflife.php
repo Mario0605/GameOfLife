@@ -46,6 +46,7 @@ if ($options->getOption("width"))
 {
     $width = $options->getOption("width");
 }
+
 if ($options->getOption("height"))
 {
     $height = $options->getOption("height");
@@ -56,7 +57,6 @@ if ($options->getOption("height"))
  *
  * The Class Board creates a board with the specified width and height.
  */
-
 $life = new Board($width, $height);
 
 if ($options->getOption("startRandom"))
@@ -100,5 +100,3 @@ for ($i=0; $i<$maxSteps; $i++)
         break;
     }
 }
-
-
