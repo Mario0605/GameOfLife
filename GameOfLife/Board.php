@@ -43,8 +43,6 @@ class Board
     }
 
     /**
-     * @meth
-     *
      * Generates a random board (random content)
      */
     public function generateRandomBoard()
@@ -59,13 +57,12 @@ class Board
     }
 
     /**
-     * @meth
-     *
      * Generates a glider in the board
      */
     public function generateGleiter()
     {
-        for ($y = 0; $y < $this->height; ++$y) {
+        for ($y = 0; $y < $this->height; ++$y)
+        {
             $row = [];
             for ($x = 0; $x < $this->width; ++$x) {
                 $row[$x] = 0;
@@ -80,8 +77,6 @@ class Board
     }
 
     /**
-     *@meth
-     *
      * Generates a Turn signal in the board
      */
     public function generateBlinker()
@@ -99,7 +94,6 @@ class Board
     }
 
     /**
-     * @meth
      * @param $x
      * @param $y
      * @return int
@@ -107,7 +101,7 @@ class Board
      * x and y are the coordinates of the cells
      * Count the Living Neighbors
      */
-    function countLivingNeighbours($x, $y)
+    function countLivingNeighbours($x, $y): int
     {
         $coordinatesArray = [
             [-1, -1], [-1, 0], [-1, 1],
@@ -126,7 +120,6 @@ class Board
     }
 
     /**
-     * @meth
      * @var array
      *
      * Creates the next generation. New Board is the new generation board. And then the rules are still used
@@ -156,7 +149,6 @@ class Board
                         $newValue = 1;
                     }
                 }
-
                 $newBoard[$widthId][$heightId] = $newValue;
             }
         }
@@ -166,8 +158,6 @@ class Board
     }
 
     /**
-     * @meth
-     *
      *Executes the board and puts - and * instead of 0 and 1
      */
     function printBoard()
@@ -184,10 +174,8 @@ class Board
 
     /**
      * Checks if the generations repeat.
-     *
-     * @meth shouldFinish
      */
-    function shouldFinish()
+    function shouldFinish(): int
     {
         $previousBoard = $this->previousGenerations[count($this->previousGenerations) -1];
         $currentBoard = $this->board;
@@ -204,6 +192,6 @@ class Board
                     return true;
                 }
         }
-        return false;
+            return false;
     }
 }
