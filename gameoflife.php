@@ -26,27 +26,41 @@ $options = new Getopt(array(
 ));
 $options->parse();
 
+/**
+ * Show the Version
+ */
 if ($options->getOption("version"))
 {
    echo "Version: 1.0\n";
    die;
-
 }
 
+/**
+ * Shows the Help
+ */
 if ($options->getOption("help"))
 {
     $options->showHelp();
     die;
 }
 
+/**
+ * Standard height and width
+ */
 $width = 10;
 $height = 10;
 
+/**
+ * Enter the width
+ */
 if ($options->getOption("width"))
 {
     $width = $options->getOption("width");
 }
 
+/**
+ * Enter the height
+ */
 if ($options->getOption("height"))
 {
     $height = $options->getOption("height");
@@ -59,11 +73,17 @@ if ($options->getOption("height"))
  */
 $life = new Board($width, $height);
 
+/**
+ * Runs a random board
+ */
 if ($options->getOption("startRandom"))
 {
     $life->generateRandomBoard();
 }
 
+/**
+ * Executes the StartGlider
+ */
 if ($options->getOption("startGlider"))
 {
     $life->generateGleiter();
