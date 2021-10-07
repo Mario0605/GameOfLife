@@ -11,15 +11,11 @@ class Board
     private $board = [[]];
 
     /**
-     * @var
-     *
      * Indicates the width of the board at the end
      */
     private $width;
 
     /**
-     * @var
-     *
      * Indicates the height of the board at the end
      */
     private $height;
@@ -175,7 +171,7 @@ class Board
     /**
      * Checks if the generations repeat.
      */
-    function shouldFinish(): int
+    function shouldFinish(): float
     {
         $previousBoard = $this->previousGenerations[count($this->previousGenerations) -1];
         $currentBoard = $this->board;

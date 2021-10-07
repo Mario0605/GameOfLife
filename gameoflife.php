@@ -20,7 +20,7 @@ $options = new Getopt(array(
     array('g', 'startGlider', Getopt::NO_ARGUMENT,"Starts the game with a Glider field"),
     array('w', 'width', Getopt::REQUIRED_ARGUMENT, "Allows to set the width of the Board"),
     array('h', 'height', Getopt::REQUIRED_ARGUMENT, "Allows to set the height of the Board"),
-    array('s', 'maxSteps', Getopt::NO_ARGUMENT, "Show the max Generation"),
+    array('s', 'maxSteps', Getopt::REQUIRED_ARGUMENT, "Show the max Generation"),
     array('v', 'version', Getopt::NO_ARGUMENT, "Show the Version"),
     array('h', 'help', Getopt::NO_ARGUMENT, "Set the Help menu")
 ));
