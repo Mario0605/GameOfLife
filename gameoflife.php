@@ -101,11 +101,6 @@ if ($options->getOption("maxSteps"))
 }
 
 /**
- * Possible boards
- */
-$life->generateRandomBoard();
-
-/**
  * for loop which outputs the generations until the above wave is reached
  */
 for ($i=0; $i<$maxSteps; $i++)
