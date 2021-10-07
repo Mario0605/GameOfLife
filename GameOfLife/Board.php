@@ -148,7 +148,6 @@ class Board
                 $newBoard[$widthId][$heightId] = $newValue;
             }
         }
-        // Sezt an letzer stelle ein neues array
         $this->previousGenerations[] = $this->board;
         $this->board = $newBoard;
     }
@@ -177,7 +176,6 @@ class Board
         $currentBoard = $this->board;
         if ($previousBoard == $currentBoard)
         {
-            //Wie liefern functionen antworten
             return true;
         }
             elseif (count($this->previousGenerations) > 1)

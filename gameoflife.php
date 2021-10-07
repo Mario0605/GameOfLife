@@ -97,15 +97,15 @@ if ($options->getOption("startGlider"))
 $maxSteps = 100;
 if ($options->getOption("maxSteps"))
 {
-    echo $maxSteps;
+    $maxSteps = $options->getOption("maxSteps");
 }
 
 /**
  * Possible boards
  */
-//$life->generateRandomBoard();
+$life->generateRandomBoard();
 //$life->generateGleiter();
-$life->generateBlinker();
+//$life->generateBlinker();
 
 /**
  * for loop which outputs the generations until the above wave is reached
