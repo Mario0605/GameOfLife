@@ -170,7 +170,7 @@ class Board
     /**
      * Checks if the generations repeat.
      */
-    function shouldFinish(): float
+    function shouldFinish(): bool
     {
         $previousBoard = $this->previousGenerations[count($this->previousGenerations) -1];
         $currentBoard = $this->board;

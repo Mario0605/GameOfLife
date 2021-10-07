@@ -104,8 +104,6 @@ if ($options->getOption("maxSteps"))
  * Possible boards
  */
 $life->generateRandomBoard();
-//$life->generateGleiter();
-//$life->generateBlinker();
 
 /**
  * for loop which outputs the generations until the above wave is reached
