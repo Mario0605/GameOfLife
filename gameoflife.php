@@ -73,29 +73,16 @@ if ($options->getOption("height"))
  * The Class Board creates a board with the specified width and height.
  */
 $life = new Board($width, $height);
-$life->generateRandomBoard();
-/**
- * Runs a random board
- */
-if ($options->getOption("startRandom"))
-{
-    $life->generateRandomBoard();
-}
 
-/**
- * Executes the StartGlider
- */
-if ($options->getOption("startGlider"))
+if($options->getOption("startGlider"))
 {
     $life->generateGleiter();
-}
-
-/**
- * Executes the Blinker
- */
-if ($options->getOption("startBlinker"))
+} elseif($options->getOption("startBlinker"))
 {
     $life->generateBlinker();
+}else
+{
+    $life->generateRandomBoard();
 }
 
 /**
@@ -103,7 +90,7 @@ if ($options->getOption("startBlinker"))
  *
  * Specifies how many generation should appear
  */
-$maxSteps = 100;
+$maxSteps = 70;
 if ($options->getOption("maxSteps"))
 {
     $maxSteps = $options->getOption("maxSteps");
