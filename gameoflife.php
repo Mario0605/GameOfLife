@@ -18,6 +18,7 @@ spl_autoload_register("autoload");
 $options = new Getopt(array(
     array('r', 'startRandom', Getopt::NO_ARGUMENT,"Starts the game with a random field"),
     array('g', 'startGlider', Getopt::NO_ARGUMENT,"Starts the game with a Glider field"),
+    array('b', 'startBlinker', Getopt::NO_ARGUMENT,"Starts the game with a Blinker field"),
     array('w', 'width', Getopt::REQUIRED_ARGUMENT, "Allows to set the width of the Board"),
     array('h', 'height', Getopt::REQUIRED_ARGUMENT, "Allows to set the height of the Board"),
     array('s', 'maxSteps', Getopt::REQUIRED_ARGUMENT, "Show the max Generation"),
@@ -72,7 +73,7 @@ if ($options->getOption("height"))
  * The Class Board creates a board with the specified width and height.
  */
 $life = new Board($width, $height);
-
+$life->generateRandomBoard();
 /**
  * Runs a random board
  */
@@ -87,6 +88,14 @@ if ($options->getOption("startRandom"))
 if ($options->getOption("startGlider"))
 {
     $life->generateGleiter();
+}
+
+/**
+ * Executes the Blinker
+ */
+if ($options->getOption("startBlinker"))
+{
+    $life->generateBlinker();
 }
 
 /**
