@@ -74,16 +74,10 @@ if ($options->getOption("height"))
  */
 $life = new Board($width, $height);
 
-if($options->getOption("startGlider"))
-{
-    $life->generateGleiter();
-} elseif($options->getOption("startBlinker"))
-{
-    $life->generateBlinker();
-}else
-{
-    $life->generateRandomBoard();
-}
+if ($options->getOption("startGlider")) $life->generateGleiter();
+else if ($options->getOption("startBlinker")) $life->generateBlinker();
+else $life->generateRandomBoard();
+
 
 /**
  * @var
