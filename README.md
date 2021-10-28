@@ -1,5 +1,5 @@
-# GameOfLife
-**Game of Life Project**
+# Game Of Life
+Game of Life Project
 
 + Is the first version. 
 + Everything is output in the console. 
