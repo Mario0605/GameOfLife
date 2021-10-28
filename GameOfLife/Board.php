@@ -8,23 +8,23 @@ class Board
      *
      * Double nested array, Represents the board (game board)
      */
-    public $board = array(
-        array(0, 1, 2, 3, 4),
-        0, 1, 2, 3, 4);
+    private $board = [[]];
 
     /**
-     * @var
-     *
      * Indicates the width of the board at the end
      */
     private $width;
 
     /**
-     * @var
-     *
      * Indicates the height of the board at the end
      */
     private $height;
+
+    /**
+     * Contains all previous boards in an array
+     * @var array
+     */
+    private $previousGenerations;
 
     /**
      * @param $_width
@@ -39,8 +39,6 @@ class Board
     }
 
     /**
-     * @meth
-     *
      * Generates a random board (random content)
      */
     public function generateRandomBoard()
@@ -55,13 +53,12 @@ class Board
     }
 
     /**
-     * @meth
-     *
      * Generates a glider in the board
      */
     public function generateGleiter()
     {
-        for ($y = 0; $y < $this->height; ++$y) {
+        for ($y = 0; $y < $this->height; ++$y)
+        {
             $row = [];
             for ($x = 0; $x < $this->width; ++$x) {
                 $row[$x] = 0;
@@ -76,11 +73,9 @@ class Board
     }
 
     /**
-     *@meth
-     *
      * Generates a Turn signal in the board
      */
-    public function generateblinker()
+    public function generateBlinker()
     {
         for ($y = 0; $y < $this->height; ++$y) {
             $row = [];
@@ -95,7 +90,6 @@ class Board
     }
 
     /**
-     * @meth
      * @param $x
      * @param $y
      * @return int
@@ -103,7 +97,7 @@ class Board
      * x and y are the coordinates of the cells
      * Count the Living Neighbors
      */
-    function countLivingNeighbours($x, $y)
+    function countLivingNeighbours($x, $y): int
     {
         $coordinatesArray = [
             [-1, -1], [-1, 0], [-1, 1],
@@ -122,7 +116,6 @@ class Board
     }
 
     /**
-     * @meth
      * @var array
      *
      * Creates the next generation. New Board is the new generation board. And then the rules are still used
@@ -152,17 +145,14 @@ class Board
                         $newValue = 1;
                     }
                 }
-
                 $newBoard[$widthId][$heightId] = $newValue;
             }
         }
+        $this->previousGenerations[] = $this->board;
         $this->board = $newBoard;
-
     }
 
     /**
-     * @meth
-     *
      *Executes the board and puts - and * instead of 0 and 1
      */
     function printBoard()
@@ -170,10 +160,32 @@ class Board
         for ($y = 0; $y < $this->height; ++$y) {
             for ($x = 0; $x < $this->width; ++$x) {
                 $character = "-";
-                if ($this->board[$x][$y] == 1) $character = "*";
+                if ($this->board[$y][$x] == 1) $character = "*";
                 echo " $character ";
             }
             echo "\n";
         }
+    }
+
+    /**
+     * Checks if the generations repeat.
+     */
+    function shouldFinish(): bool
+    {
+        $previousBoard = $this->previousGenerations[count($this->previousGenerations) -1];
+        $currentBoard = $this->board;
+        if ($previousBoard == $currentBoard)
+        {
+            return true;
+        }
+            elseif (count($this->previousGenerations) > 1)
+        {
+            $previousPreviousBoard = $this->previousGenerations[count($this->previousGenerations) -2];
+            if ($previousPreviousBoard ==  $currentBoard)
+                {
+                    return true;
+                }
+        }
+            return false;
     }
 }
