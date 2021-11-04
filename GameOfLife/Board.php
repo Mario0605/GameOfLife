@@ -8,17 +8,17 @@ class Board
      *
      * Double nested array, Represents the board (game board)
      */
-    private $board = [[]];
+    public $board = [[]];
 
     /**
      * Indicates the width of the board at the end
      */
-    private $width;
+    public $width;
 
     /**
      * Indicates the height of the board at the end
      */
-    private $height;
+    public $height;
 
     /**
      * Contains all previous boards in an array
@@ -59,7 +59,7 @@ class Board
     {
         for ($y = 0; $y < $this->height; ++$y)
         {
-            $row = [];
+            $row = [3];
             for ($x = 0; $x < $this->width; ++$x) {
                 $row[$x] = 0;
             }

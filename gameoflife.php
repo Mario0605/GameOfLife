@@ -3,6 +3,11 @@ use GameOfLife\Board;
 use Ulrichsg\Getopt;
 require_once "Getopt.php";
 
+/*
+$className="Input\RandomInput";
+$input = new $className;
+*/
+
 /**
  * @param $className
  *
@@ -20,7 +25,7 @@ $options = new Getopt(array(
     array('g', 'startGlider', Getopt::NO_ARGUMENT,"Starts the game with a Glider field"),
     array('b', 'startBlinker', Getopt::NO_ARGUMENT,"Starts the game with a Blinker field"),
     array('w', 'width', Getopt::REQUIRED_ARGUMENT, "Allows to set the width of the Board"),
-    array('h', 'height', Getopt::REQUIRED_ARGUMENT, "Allows to set the height of the Board"),
+    array('e', 'height', Getopt::REQUIRED_ARGUMENT, "Allows to set the height of the Board"),
     array('s', 'maxSteps', Getopt::REQUIRED_ARGUMENT, "Show the max Generation"),
     array('v', 'version', Getopt::NO_ARGUMENT, "Show the Version"),
     array('h', 'help', Getopt::NO_ARGUMENT, "Set the Help menu")
@@ -74,10 +79,56 @@ if ($options->getOption("height"))
  */
 $life = new Board($width, $height);
 
-if ($options->getOption("startGlider")) $life->generateGleiter();
-else if ($options->getOption("startBlinker")) $life->generateBlinker();
-else $life->generateRandomBoard();
+if ($options->getOption("startGlider"))
+{
+    $startCoordinateWidth = $width / 2 - 0.6;
+    $startCoordinateHeight = $height / 2 - 0.6;
 
+    /**
+     * $xa int
+     * $ya int
+     */
+    $xa = round($startCoordinateWidth, 0);
+    $ya = round($startCoordinateHeight, 0);
+
+    $coordinatesArray = [
+        [+2,0],
+        [2,-1], [-2,-2],
+        [0,+1], [1,+2]
+    ];
+
+    foreach ($coordinatesArray as $coordinate)
+    {
+        for ($y = 0; $y < $life->height; ++$y)
+        {
+            $row = [3];
+            for ($x = 0; $x < $life->width; ++$x) {
+                $row[$x] = 0;
+            }
+            $life->board[$y] = $row;
+        }
+        /**
+         * $start int
+         *
+         * Places the glider in the center
+         */
+        $life->board[$xa +1][$ya +0]=1;
+        $life->board[$xa +2][$ya +1]=1;
+        $life->board[$xa +2][$ya +2]=1;
+        $life->board[$xa +1][$ya +2]=1;
+        $life->board[$xa +0][$ya +2]=1;
+    }
+        //$life->generateGleiter();
+}
+
+else if ($options->getOption("startBlinker"))
+{
+    $life->generateBlinker();
+}
+else
+{
+    $life->generateRandomBoard();
+}
 
 /**
  * @var
