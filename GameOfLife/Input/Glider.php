@@ -1,0 +1,50 @@
+<?php
+namespace GameOfLife\Input;
+use Ulrichsg\Getopt;
+use GameOfLife\Board;
+use GameOfLife\Base;
+
+/**
+ * @class Glider
+ *
+ * The Class Glider
+ */
+class Glider extends Base
+{
+    /**
+     * @function fillBoard
+     *
+     * You can choose how full you want to fill the board
+     */
+    function fillBoard(Board $_board, Getopt $_options) : void
+    {
+        $startCoordinateWidth = $_board->getWidth() / 2 - 0.6;
+        $startCoordinateHeight = $_board->getHeight() / 2 - 0.6;
+
+        $xa = round($startCoordinateWidth, 0);
+        $ya = round($startCoordinateHeight, 0);
+
+        if ($_options->getOption("positionG"))
+        {
+            $pos = explode(",", $_options->getOption("positionG"));
+            $xa = $pos[0];
+            $ya = $pos[1];
+        }
+
+            $_board->setCell($xa + 1, $ya + 0, true);
+            $_board->setCell($xa + 2, $ya + 1, true);
+            $_board->setCell($xa + 2, $ya + 2, true);
+            $_board->setCell($xa + 1, $ya + 2, true);
+            $_board->setCell($xa + 0, $ya + 2, true);
+        }
+
+    /**
+     * @function addOptions
+     *
+     * Adds the option
+     */
+    function addOptions(Getopt $_options)
+    {
+        $_options->addOptions([["p", "positionG", Getopt::REQUIRED_ARGUMENT, "Sets the glider on the Position"]]);
+    }
+}

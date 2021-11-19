@@ -8,17 +8,17 @@ class Board
      *
      * Double nested array, Represents the board (game board)
      */
-    public $board = [[]];
+    private $board = [[]];
 
     /**
      * Indicates the width of the board at the end
      */
-    public $width;
+    private $width;
 
     /**
      * Indicates the height of the board at the end
      */
-    public $height;
+    private $height;
 
     /**
      * Contains all previous boards in an array
@@ -36,6 +36,15 @@ class Board
     {
         $this->width = $_width;
         $this->height = $_height;
+        for ($y = 0; $y < $this->height; ++$y)
+        {
+            $row = [];
+            for ($x = 0; $x < $this->width; ++$x)
+            {
+                $row[$x] = 0;
+            }
+            $this->board[$y] = $row;
+        }
     }
 
     /**
@@ -43,9 +52,11 @@ class Board
      */
     public function generateRandomBoard()
     {
-        for ($y = 0; $y < $this->height; ++$y) {
+        for ($y = 0; $y < $this->height; ++$y)
+        {
             $row = [];
-            for ($x = 0; $x < $this->width; ++$x) {
+            for ($x = 0; $x < $this->width; ++$x)
+            {
                 $row[$x] = round(rand(0, 1));
             }
             $this->board[$y] = $row;
@@ -60,7 +71,8 @@ class Board
         for ($y = 0; $y < $this->height; ++$y)
         {
             $row = [3];
-            for ($x = 0; $x < $this->width; ++$x) {
+            for ($x = 0; $x < $this->width; ++$x)
+            {
                 $row[$x] = 0;
             }
             $this->board[$y] = $row;
@@ -77,9 +89,11 @@ class Board
      */
     public function generateBlinker()
     {
-        for ($y = 0; $y < $this->height; ++$y) {
+        for ($y = 0; $y < $this->height; ++$y)
+        {
             $row = [];
-            for ($x = 0; $x < $this->width; ++$x) {
+            for ($x = 0; $x < $this->width; ++$x)
+            {
                 $row[$x] = 0;
             }
             $this->board[$y] = $row;
@@ -106,9 +120,11 @@ class Board
         ];
         $count = 0;
 
-        foreach ($coordinatesArray as $coordinate) {
+        foreach ($coordinatesArray as $coordinate)
+        {
             if (isset($this->board[$x + $coordinate[0]][$y + $coordinate[1]])
-                && $this->board[$x + $coordinate[0]][$y + $coordinate[1]] == 1) {
+                && $this->board[$x + $coordinate[0]][$y + $coordinate[1]] == 1)
+            {
                 $count++;
             }
         }
@@ -124,15 +140,19 @@ class Board
     {
         $newBoard = [];
 
-        foreach ($this->board as $widthId => $width) {
+        foreach ($this->board as $widthId => $width)
+        {
             $newBoard[$widthId] = [];
-            foreach ($width as $heightId => $height) {
+            foreach ($width as $heightId => $height)
+            {
                 $count = $this->countLivingNeighbours($widthId, $heightId);
 
                 $newValue=null;
-                if ($height == 1) {
+                if ($height == 1)
+                {
                     // The cell is alive.
-                    if ($count < 2 || $count > 3) {
+                    if ($count < 2 || $count > 3)
+                    {
                         // Any live cell with less than two or more than three neighbours dies.
                         $newValue = 0;
                     } else {
@@ -140,7 +160,8 @@ class Board
                         $newValue = 1;
                     }
                 } else {
-                    if ($count == 3) {
+                    if ($count == 3)
+                    {
                         // Any dead cell with three neighbours lives.
                         $newValue = 1;
                     }
@@ -157,10 +178,12 @@ class Board
      */
     function printBoard()
     {
-        for ($y = 0; $y < $this->height; ++$y) {
-            for ($x = 0; $x < $this->width; ++$x) {
+        for ($y = 0; $y < $this->height; ++$y)
+        {
+            for ($x = 0; $x < $this->width; ++$x)
+            {
                 $character = "-";
-                if ($this->board[$y][$x] == 1) $character = "*";
+                if ($this->board[$x][$y] == 1) $character = "*";
                 echo " $character ";
             }
             echo "\n";
@@ -187,5 +210,22 @@ class Board
                 }
         }
             return false;
+    }
+
+    public function getHeight()
+    {
+        return $this->height;
+    }
+    public function getWidth()
+    {
+        return $this->width;
+    }
+    public function setCell($x,$y,$alive)
+    {
+        return $this->board[$x][$y] = $alive;
+    }
+    public function getBoard()
+    {
+        return $this->board;
     }
 }
