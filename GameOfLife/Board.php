@@ -31,62 +31,22 @@ class Board
      * @param $_height
      *
      * You can then enter the size and width in the file
+     *
+     * The Loop: Creates the board using the X and Y coordinates
      */
     public function __construct($_width, $_height)
     {
         $this->width = $_width;
         $this->height = $_height;
-    }
-
-    /**
-     * Generates a random board (random content)
-     */
-    public function generateRandomBoard()
-    {
-        for ($y = 0; $y < $this->height; ++$y) {
-            $row = [];
-            for ($x = 0; $x < $this->width; ++$x) {
-                $row[$x] = round(rand(0, 1));
-            }
-            $this->board[$y] = $row;
-        }
-    }
-
-    /**
-     * Generates a glider in the board
-     */
-    public function generateGleiter()
-    {
         for ($y = 0; $y < $this->height; ++$y)
         {
             $row = [];
-            for ($x = 0; $x < $this->width; ++$x) {
+            for ($x = 0; $x < $this->width; ++$x)
+            {
                 $row[$x] = 0;
             }
             $this->board[$y] = $row;
         }
-        $this->board[1][0]=1;
-        $this->board[2][1]=1;
-        $this->board[2][2]=1;
-        $this->board[1][2]=1;
-        $this->board[0][2]=1;
-    }
-
-    /**
-     * Generates a Turn signal in the board
-     */
-    public function generateBlinker()
-    {
-        for ($y = 0; $y < $this->height; ++$y) {
-            $row = [];
-            for ($x = 0; $x < $this->width; ++$x) {
-                $row[$x] = 0;
-            }
-            $this->board[$y] = $row;
-        }
-        $this->board[1][0]=1;
-        $this->board[1][1]=1;
-        $this->board[1][2]=1;
     }
 
     /**
@@ -106,9 +66,11 @@ class Board
         ];
         $count = 0;
 
-        foreach ($coordinatesArray as $coordinate) {
+        foreach ($coordinatesArray as $coordinate)
+        {
             if (isset($this->board[$x + $coordinate[0]][$y + $coordinate[1]])
-                && $this->board[$x + $coordinate[0]][$y + $coordinate[1]] == 1) {
+                && $this->board[$x + $coordinate[0]][$y + $coordinate[1]] == 1)
+            {
                 $count++;
             }
         }
@@ -124,15 +86,19 @@ class Board
     {
         $newBoard = [];
 
-        foreach ($this->board as $widthId => $width) {
+        foreach ($this->board as $widthId => $width)
+        {
             $newBoard[$widthId] = [];
-            foreach ($width as $heightId => $height) {
+            foreach ($width as $heightId => $height)
+            {
                 $count = $this->countLivingNeighbours($widthId, $heightId);
 
                 $newValue=null;
-                if ($height == 1) {
+                if ($height == 1)
+                {
                     // The cell is alive.
-                    if ($count < 2 || $count > 3) {
+                    if ($count < 2 || $count > 3)
+                    {
                         // Any live cell with less than two or more than three neighbours dies.
                         $newValue = 0;
                     } else {
@@ -140,7 +106,8 @@ class Board
                         $newValue = 1;
                     }
                 } else {
-                    if ($count == 3) {
+                    if ($count == 3)
+                    {
                         // Any dead cell with three neighbours lives.
                         $newValue = 1;
                     }
@@ -157,10 +124,12 @@ class Board
      */
     function printBoard()
     {
-        for ($y = 0; $y < $this->height; ++$y) {
-            for ($x = 0; $x < $this->width; ++$x) {
+        for ($y = 0; $y < $this->height; ++$y)
+        {
+            for ($x = 0; $x < $this->width; ++$x)
+            {
                 $character = "-";
-                if ($this->board[$y][$x] == 1) $character = "*";
+                if ($this->board[$x][$y] == 1) $character = "*";
                 echo " $character ";
             }
             echo "\n";
@@ -187,5 +156,29 @@ class Board
                 }
         }
             return false;
+    }
+
+    /**
+     * Return the height of the Board
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
+     * Return the witdth of the Board
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * Set a Cell with X and Y alive or not alive.
+     */
+    public function setCell($x,$y,$alive)
+    {
+        return $this->board[$x][$y] = $alive;
     }
 }

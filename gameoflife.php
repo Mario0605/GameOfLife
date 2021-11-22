@@ -1,6 +1,8 @@
 <?php
 use GameOfLife\Board;
 use Ulrichsg\Getopt;
+use GameOfLife\Base;
+
 require_once "Getopt.php";
 
 /**
@@ -10,31 +12,62 @@ require_once "Getopt.php";
  */
 function autoload ($className)
 {
-    $classPath = str_replace ("\\", "/", $className);
-    require_once (sprintf("%s/%s.php", __DIR__,$classPath));
+    $classPath = sprintf("%s/%s.php",__DIR__,str_replace ("\\", "/", $className)) ;
+    if (is_readable($classPath))require_once ($classPath);
 }
 spl_autoload_register("autoload");
 
+/**
+ * The Options for the Game of Life Project
+ */
 $options = new Getopt(array(
-    array('r', 'startRandom', Getopt::NO_ARGUMENT,"Starts the game with a random field"),
-    array('g', 'startGlider', Getopt::NO_ARGUMENT,"Starts the game with a Glider field"),
-    array('b', 'startBlinker', Getopt::NO_ARGUMENT,"Starts the game with a Blinker field"),
+    array("i", 'input', Getopt::REQUIRED_ARGUMENT,"Starts the game with a random field"),
     array('w', 'width', Getopt::REQUIRED_ARGUMENT, "Allows to set the width of the Board"),
-    array('h', 'height', Getopt::REQUIRED_ARGUMENT, "Allows to set the height of the Board"),
-    array('s', 'maxSteps', Getopt::REQUIRED_ARGUMENT, "Show the max Generation"),
+    array('t', 'height', Getopt::REQUIRED_ARGUMENT, "Allows to set the height of the Board"),
+    array('m', 'maxSteps', Getopt::REQUIRED_ARGUMENT, "Show the max Generation"),
     array('v', 'version', Getopt::NO_ARGUMENT, "Show the Version"),
     array('h', 'help', Getopt::NO_ARGUMENT, "Set the Help menu")
 ));
+
+/**
+ * All Files in the Directory GameOfLife->Input and all Files with .php
+ */
+$files = glob("GameOfLife/Input/*.php");
+
+/**
+ * From all files .php is cut off and so we get basename.
+ * If the class Base is found, it skips it if you class eccests that and comes from Base, it adds it to the options
+ */
+foreach ($files as $file)
+{
+    $baseName = basename($file, ".php");
+    $className = "GameOfLife\\Input\\".$baseName;
+
+    if($className == Base::class) continue;
+
+    if(class_exists($className))
+    {
+        $input = new $className;
+        if($input instanceof Base)
+        {
+            $input->addOptions($options);
+        }
+    }
+}
 $options->parse();
 
 /**
- * Show the Version
+ * Standard height and width
  */
-if ($options->getOption("version"))
-{
-   echo "Version: 1.0\n";
-   die;
-}
+$width = 10;
+$height = 10;
+
+/**
+ * @Class
+ *
+ * The Class Board creates a board with the specified width and height.
+ */
+$life = new Board ($width, $height);
 
 /**
  * Shows the Help
@@ -45,15 +78,6 @@ if ($options->getOption("help"))
     die;
 }
 
-/**
- * Standard height and width
- */
-$width = 10;
-$height = 10;
-
-/**
- * Enter the width
- */
 if ($options->getOption("width"))
 {
     $width = $options->getOption("width");
@@ -68,18 +92,6 @@ if ($options->getOption("height"))
 }
 
 /**
- * @Class
- *
- * The Class Board creates a board with the specified width and height.
- */
-$life = new Board($width, $height);
-
-if ($options->getOption("startGlider")) $life->generateGleiter();
-else if ($options->getOption("startBlinker")) $life->generateBlinker();
-else $life->generateRandomBoard();
-
-
-/**
  * @var
  *
  * Specifies how many generation should appear
@@ -91,9 +103,30 @@ if ($options->getOption("maxSteps"))
 }
 
 /**
+ * Show the Version
+ */
+if ($options->getOption("version"))
+{
+    echo "Version: 3.0\n";
+    die;
+}
+
+$newInput = $options->getOption("input");
+$className = "GameOfLife\Input\\$newInput";
+
+if (class_exists($className))
+{
+    $input = new $className;
+    if ($input instanceof Base)
+    {
+        $input->fillBoard($life, $options);
+    }
+}
+
+/**
  * for loop which outputs the generations until the above wave is reached
  */
-for ($i=0; $i<$maxSteps; $i++)
+for ($i = 0; $i < $maxSteps; $i++)
 {
     echo "Generation: $i \n";
     $life->printBoard();
