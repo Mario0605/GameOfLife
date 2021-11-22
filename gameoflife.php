@@ -17,6 +17,9 @@ function autoload ($className)
 }
 spl_autoload_register("autoload");
 
+/**
+ * The Options for the Game of Life Project
+ */
 $options = new Getopt(array(
     array("i", 'input', Getopt::REQUIRED_ARGUMENT,"Starts the game with a random field"),
     array('w', 'width', Getopt::REQUIRED_ARGUMENT, "Allows to set the width of the Board"),
@@ -26,8 +29,15 @@ $options = new Getopt(array(
     array('h', 'help', Getopt::NO_ARGUMENT, "Set the Help menu")
 ));
 
+/**
+ * All Files in the Directory GameOfLife->Input and all Files with .php
+ */
 $files = glob("GameOfLife/Input/*.php");
 
+/**
+ * From all files .php is cut off and so we get basename.
+ * If the class Base is found, it skips it if you class eccests that and comes from Base, it adds it to the options
+ */
 foreach ($files as $file)
 {
     $baseName = basename($file, ".php");
@@ -37,7 +47,6 @@ foreach ($files as $file)
 
     if(class_exists($className))
     {
-
         $input = new $className;
         if($input instanceof Base)
         {
@@ -45,8 +54,8 @@ foreach ($files as $file)
         }
     }
 }
-
 $options->parse();
+
 /**
  * Standard height and width
  */

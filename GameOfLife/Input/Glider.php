@@ -5,15 +5,11 @@ use GameOfLife\Board;
 use GameOfLife\Base;
 
 /**
- * @class Glider
- *
  * The Class Glider
  */
 class Glider extends Base
 {
     /**
-     * @function fillBoard
-     *
      * You can choose how full you want to fill the board
      */
     function fillBoard(Board $_board, Getopt $_options) : void
@@ -24,13 +20,12 @@ class Glider extends Base
         $xa = round($startCoordinateWidth, 0);
         $ya = round($startCoordinateHeight, 0);
 
-        if ($_options->getOption("positionG"))
+        if ($_options->getOption("gliderPosition"))
         {
-            $pos = explode(",", $_options->getOption("positionG"));
+            $pos = explode(",", $_options->getOption("gliderPosition"));
             $xa = $pos[0];
             $ya = $pos[1];
         }
-
             $_board->setCell($xa + 1, $ya + 0, true);
             $_board->setCell($xa + 2, $ya + 1, true);
             $_board->setCell($xa + 2, $ya + 2, true);
@@ -39,12 +34,11 @@ class Glider extends Base
         }
 
     /**
-     * @function addOptions
-     *
-     * Adds the option
+     * Adds the option, to execute the Option Enter php gameoflife.php -i Glider --gliderPosition 4,4
+     * The Cell X:4 Y:4 is the StartPoint of the Glider.
      */
     function addOptions(Getopt $_options)
     {
-        $_options->addOptions([["p", "positionG", Getopt::REQUIRED_ARGUMENT, "Sets the glider on the Position"]]);
+        $_options->addOptions([[Null, "gliderPosition", Getopt::REQUIRED_ARGUMENT, "Sets the glider on the Position"]]);
     }
 }

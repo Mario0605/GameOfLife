@@ -15,8 +15,7 @@ abstract class Base
      *
      * You can add Options
      */
-    function addOptions(Getopt $_options)
-    {}
+    function addOptions(Getopt $_options){}
 
     /**
      * @function fillBoard

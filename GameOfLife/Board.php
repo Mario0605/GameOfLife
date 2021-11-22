@@ -31,6 +31,8 @@ class Board
      * @param $_height
      *
      * You can then enter the size and width in the file
+     *
+     * The Loop: Creates the board using the X and Y coordinates
      */
     public function __construct($_width, $_height)
     {
@@ -45,62 +47,6 @@ class Board
             }
             $this->board[$y] = $row;
         }
-    }
-
-    /**
-     * Generates a random board (random content)
-     */
-    public function generateRandomBoard()
-    {
-        for ($y = 0; $y < $this->height; ++$y)
-        {
-            $row = [];
-            for ($x = 0; $x < $this->width; ++$x)
-            {
-                $row[$x] = round(rand(0, 1));
-            }
-            $this->board[$y] = $row;
-        }
-    }
-
-    /**
-     * Generates a glider in the board
-     */
-    public function generateGleiter()
-    {
-        for ($y = 0; $y < $this->height; ++$y)
-        {
-            $row = [3];
-            for ($x = 0; $x < $this->width; ++$x)
-            {
-                $row[$x] = 0;
-            }
-            $this->board[$y] = $row;
-        }
-        $this->board[1][0]=1;
-        $this->board[2][1]=1;
-        $this->board[2][2]=1;
-        $this->board[1][2]=1;
-        $this->board[0][2]=1;
-    }
-
-    /**
-     * Generates a Turn signal in the board
-     */
-    public function generateBlinker()
-    {
-        for ($y = 0; $y < $this->height; ++$y)
-        {
-            $row = [];
-            for ($x = 0; $x < $this->width; ++$x)
-            {
-                $row[$x] = 0;
-            }
-            $this->board[$y] = $row;
-        }
-        $this->board[1][0]=1;
-        $this->board[1][1]=1;
-        $this->board[1][2]=1;
     }
 
     /**
@@ -212,20 +158,27 @@ class Board
             return false;
     }
 
+    /**
+     * Return the height of the Board
+     */
     public function getHeight()
     {
         return $this->height;
     }
+
+    /**
+     * Return the witdth of the Board
+     */
     public function getWidth()
     {
         return $this->width;
     }
+
+    /**
+     * Set a Cell with X and Y alive or not alive.
+     */
     public function setCell($x,$y,$alive)
     {
         return $this->board[$x][$y] = $alive;
-    }
-    public function getBoard()
-    {
-        return $this->board;
     }
 }
